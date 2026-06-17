@@ -1,0 +1,135 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use App\Models\Provider;
+use App\Models\ProviderProof;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+
+class AuthController extends Controller
+{
+    public function registerCustomer(Request $request)
+    {
+        $request->validate([
+            'first_name'  => 'required|string',
+            'second_name' => 'nullable|string',
+            'last_name'   => 'required|string',
+            'email'       => 'required|email|unique:users',
+            'phone'       => 'required|string|unique:users',
+            'address'     => 'nullable|string',
+            'password'    => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::create([
+            'first_name'  => $request->first_name,
+            'second_name' => $request->second_name,
+            'last_name'   => $request->last_name,
+            'email'       => $request->email,
+            'phone'       => $request->phone,
+            'address'     => $request->address,
+            'role'        => 'customer',
+            'password'    => Hash::make($request->password),
+        ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'user'  => $user,
+            'token' => $token,
+        ], 201);
+    }
+
+    public function registerProvider(Request $request)
+    {
+        $request->validate([
+            'first_name'   => 'required|string',
+            'second_name'  => 'nullable|string',
+            'last_name'    => 'required|string',
+            'email'        => 'required|email|unique:users',
+            'phone'        => 'required|string|unique:users',
+            'address'      => 'nullable|string',
+            'password'     => 'required|string|min:6|confirmed',
+            'company_name' => 'required|string',
+            'price_KW'     => 'required|numeric',
+            'terms_subscr' => 'nullable|string',
+            'proofs'       => 'required|array|min:1',
+            'proofs.*'     => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $user = User::create([
+            'first_name'  => $request->first_name,
+            'second_name' => $request->second_name,
+            'last_name'   => $request->last_name,
+            'email'       => $request->email,
+            'phone'       => $request->phone,
+            'address'     => $request->address,
+            'role'        => 'provider',
+            'password'    => Hash::make($request->password),
+        ]);
+
+        $provider = Provider::create([
+            'user_id'      => $user->id,
+            'company_name' => $request->company_name,
+            'price_KW'     => $request->price_KW,
+            'terms_subscr' => $request->terms_subscr,
+            'status'       => 'pending',
+        ]);
+
+        foreach ($request->file('proofs') as $proof) {
+            $path = $proof->store('provider_proofs', 'public');
+            ProviderProof::create([
+                'provider_id' => $provider->id,
+                'image_path'  => $path,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'تم التسجيل بنجاح، في انتظار موافقة الإدارة',
+            'user'    => $user,
+        ], 201);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['بيانات الدخول غير صحيحة'],
+            ]);
+        }
+
+        if ($user->isProvider()) {
+            $provider = Provider::where('user_id', $user->id)->first();
+            if ($provider && $provider->status === 'pending') {
+                return response()->json(['message' => 'حسابك قيد المراجعة من قبل الإدارة'], 403);
+            }
+            if ($provider && $provider->status === 'suspended') {
+                return response()->json(['message' => 'تم تعليق حسابك'], 403);
+            }
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'user'  => $user,
+            'token' => $token,
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'تم تسجيل الخروج']);
+    }
+}

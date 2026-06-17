@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysql.exe\" -u root -e \"CREATE DATABASE IF NOT EXISTS wasel_project2 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\")",
+      "PowerShell(Rename-Item \"c:\\\\wasel -my project\\(2\\)\\\\database\\\\migrations\\\\2026_01_01_000004_1_create_provider_area_table.php\" \"2026_01_01_000004a_create_provider_area_table.php\")"
+    ]
+  }
+}
