@@ -1,0 +1,710 @@
+{
+  "info": {
+    "name": "Wasel API - وصل",
+    "description": "API collection for Wasel Generator Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://wasel-api-production-0719.up.railway.app/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Auth - المصادقة",
+      "item": [
+        {
+          "name": "Register Customer - تسجيل مواطن",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"محمد\",\n  \"last_name\": \"أبو علي\",\n  \"email\": \"customer@test.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"phone\": \"0599111111\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/register/customer",
+              "host": ["{{base_url}}"],
+              "path": ["register", "customer"]
+            }
+          }
+        },
+        {
+          "name": "Register Provider - تسجيل صاحب مولد",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "first_name", "value": "خالد", "type": "text" },
+                { "key": "last_name", "value": "النجار", "type": "text" },
+                { "key": "email", "value": "provider@test.com", "type": "text" },
+                { "key": "password", "value": "password123", "type": "text" },
+                { "key": "password_confirmation", "value": "password123", "type": "text" },
+                { "key": "phone", "value": "0599222222", "type": "text" },
+                { "key": "company_name", "value": "مولدات النجار", "type": "text" },
+                { "key": "price_KW", "value": "5.5", "type": "text" },
+                { "key": "terms_subscr", "value": "يتم الدفع شهرياً", "type": "text" },
+                { "key": "proofs[]", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/register/provider",
+              "host": ["{{base_url}}"],
+              "path": ["register", "provider"]
+            }
+          }
+        },
+        {
+          "name": "Login - تسجيل دخول",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"customer@test.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["login"]
+            }
+          }
+        },
+        {
+          "name": "Logout - تسجيل خروج",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/logout",
+              "host": ["{{base_url}}"],
+              "path": ["logout"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User - بيانات المستخدم",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/user",
+              "host": ["{{base_url}}"],
+              "path": ["user"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Generators - المولدات",
+      "item": [
+        {
+          "name": "Get All Generators - كل المولدات",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/generators",
+              "host": ["{{base_url}}"],
+              "path": ["generators"]
+            }
+          }
+        },
+        {
+          "name": "Get Generator by ID - تفاصيل مولد",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/generators/1",
+              "host": ["{{base_url}}"],
+              "path": ["generators", "1"]
+            }
+          }
+        },
+        {
+          "name": "Search Generators - بحث",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/generators/search?q=نجار",
+              "host": ["{{base_url}}"],
+              "path": ["generators", "search"],
+              "query": [{ "key": "q", "value": "نجار" }]
+            }
+          }
+        },
+        {
+          "name": "Add Generator - إضافة مولد (Provider)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"كاتربيلر 2022\",\n  \"status\": \"active\",\n  \"gps\": \"31.5017,34.4668\",\n  \"powerKW\": 150\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/generators",
+              "host": ["{{base_url}}"],
+              "path": ["generators"]
+            }
+          }
+        },
+        {
+          "name": "Update Generator - تعديل مولد (Provider)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"maintenance\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/generators/1",
+              "host": ["{{base_url}}"],
+              "path": ["generators", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Generator - حذف مولد (Provider)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/generators/1",
+              "host": ["{{base_url}}"],
+              "path": ["generators", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Subscriptions - الاشتراكات",
+      "item": [
+        {
+          "name": "Subscribe - طلب اشتراك (Customer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"generator_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/subscriptions",
+              "host": ["{{base_url}}"],
+              "path": ["subscriptions"]
+            }
+          }
+        },
+        {
+          "name": "My Subscriptions - اشتراكاتي (Customer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/my",
+              "host": ["{{base_url}}"],
+              "path": ["subscriptions", "my"]
+            }
+          }
+        },
+        {
+          "name": "Cancel Subscription - إلغاء اشتراك (Customer)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/1",
+              "host": ["{{base_url}}"],
+              "path": ["subscriptions", "1"]
+            }
+          }
+        },
+        {
+          "name": "Approve Subscription - قبول اشتراك (Provider)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/1/approve",
+              "host": ["{{base_url}}"],
+              "path": ["subscriptions", "1", "approve"]
+            }
+          }
+        },
+        {
+          "name": "Reject Subscription - رفض اشتراك (Provider)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/1/reject",
+              "host": ["{{base_url}}"],
+              "path": ["subscriptions", "1", "reject"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Invoices - الفواتير",
+      "item": [
+        {
+          "name": "Create Invoice - إصدار فاتورة (Provider)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": 1,\n  \"previous_reading\": 100,\n  \"current_reading\": 250,\n  \"due_date\": \"2026-07-01\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/invoices",
+              "host": ["{{base_url}}"],
+              "path": ["invoices"]
+            }
+          }
+        },
+        {
+          "name": "My Invoices - فواتيري (Customer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoices/my",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", "my"]
+            }
+          }
+        },
+        {
+          "name": "Get Invoice - تفاصيل فاتورة (Customer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoices/1",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Payments - الدفعات",
+      "item": [
+        {
+          "name": "Pay Invoice - رفع إثبات دفع (Customer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "invoice_id", "value": "1", "type": "text" },
+                { "key": "amount", "value": "825", "type": "text" },
+                { "key": "receipt_image", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/payments",
+              "host": ["{{base_url}}"],
+              "path": ["payments"]
+            }
+          }
+        },
+        {
+          "name": "My Payments - سجل دفعاتي (Customer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/my",
+              "host": ["{{base_url}}"],
+              "path": ["payments", "my"]
+            }
+          }
+        },
+        {
+          "name": "Review Payment - مراجعة دفعة (Provider)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/payments/1/review",
+              "host": ["{{base_url}}"],
+              "path": ["payments", "1", "review"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Reviews - التقييمات",
+      "item": [
+        {
+          "name": "Add Review - إضافة تقييم (Customer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target_type\": \"provider\",\n  \"target_id\": 1,\n  \"rate\": 5,\n  \"comment\": \"خدمة ممتازة\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews",
+              "host": ["{{base_url}}"],
+              "path": ["reviews"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Complaints - الشكاوى",
+      "item": [
+        {
+          "name": "Submit Complaint - تقديم شكوى (Customer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"انقطاع متكرر في الكهرباء\",\n  \"description\": \"المولد ينقطع كل ساعة\",\n  \"target_type\": \"provider\",\n  \"target_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/complaints",
+              "host": ["{{base_url}}"],
+              "path": ["complaints"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Notifications - الإشعارات",
+      "item": [
+        {
+          "name": "My Notifications - إشعاراتي (Customer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/my",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "my"]
+            }
+          }
+        },
+        {
+          "name": "Mark as Read - تحديد كمقروء",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/1/read",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "1", "read"]
+            }
+          }
+        },
+        {
+          "name": "Send Notification - إرسال إشعار (Provider)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"سيتم إيقاف المولد للصيانة غداً من 10 صباحاً حتى 2 ظهراً\",\n  \"type\": \"generator_status\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/notifications/send",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "send"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Posters - الإعلانات",
+      "item": [
+        {
+          "name": "Get All Posters - كل الإعلانات",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/posters",
+              "host": ["{{base_url}}"],
+              "path": ["posters"]
+            }
+          }
+        },
+        {
+          "name": "Create Poster - نشر إعلان (Provider)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"عرض خاص - خصم 20%\",\n  \"description\": \"لأول 10 مشتركين جدد خصم 20% على الاشتراك الشهري\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/posters",
+              "host": ["{{base_url}}"],
+              "path": ["posters"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Admin - الإدارة",
+      "item": [
+        {
+          "name": "Get All Users - كل المستخدمين (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/users",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get All Providers - كل الـ providers (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/providers",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "providers"]
+            }
+          }
+        },
+        {
+          "name": "Approve Provider - قبول provider (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/providers/1/approve",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "providers", "1", "approve"]
+            }
+          }
+        },
+        {
+          "name": "Suspend Provider - تعليق provider (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/providers/1/suspend",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "providers", "1", "suspend"]
+            }
+          }
+        },
+        {
+          "name": "Get All Complaints - كل الشكاوى (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/complaints",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "complaints"]
+            }
+          }
+        },
+        {
+          "name": "System Reports - إحصائيات النظام (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/reports",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "reports"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "11. Areas - المناطق",
+      "item": [
+        {
+          "name": "Get All Areas - كل المناطق",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/areas",
+              "host": ["{{base_url}}"],
+              "path": ["areas"]
+            }
+          }
+        },
+        {
+          "name": "Add Area - إضافة منطقة (Provider)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"حي الرمال\",\n  \"coordinates\": \"31.5017,34.4668\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/areas",
+              "host": ["{{base_url}}"],
+              "path": ["areas"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
