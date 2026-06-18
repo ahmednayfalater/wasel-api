@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register/customer', [AuthController::class, 'registerCustomer']);
 Route::post('/register/provider', [AuthController::class, 'registerProvider']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -27,9 +29,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Generators - public for logged in users
     Route::get('/generators', [GeneratorController::class, 'index']);
-    Route::get('/generators/{id}', [GeneratorController::class, 'show']);
     Route::get('/generators/search', [GeneratorController::class, 'search']);
     Route::get('/generators/compare', [GeneratorController::class, 'compare']);
+    Route::get('/generators/{id}', [GeneratorController::class, 'show']);
 
     // Posters - public for logged in users
     Route::get('/posters', [PosterController::class, 'index']);
@@ -58,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/provider/profile', [ProviderController::class, 'profile']);
         Route::put('/provider/profile', [ProviderController::class, 'updateProfile']);
 
+        Route::get('/provider/generators', [GeneratorController::class, 'myGenerators']);
         Route::post('/generators', [GeneratorController::class, 'store']);
         Route::put('/generators/{id}', [GeneratorController::class, 'update']);
         Route::delete('/generators/{id}', [GeneratorController::class, 'destroy']);
@@ -80,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/notifications/send', [NotificationController::class, 'send']);
 
         Route::post('/areas', [AreaController::class, 'store']);
+        Route::post('/areas/{id}/join', [AreaController::class, 'join']);
         Route::get('/areas', [AreaController::class, 'index']);
     });
 

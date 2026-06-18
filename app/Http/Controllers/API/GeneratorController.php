@@ -22,7 +22,7 @@ class GeneratorController extends Controller
             $query->where('status', $request->status);
         }
 
-        return response()->json($query->get());
+        return response()->json($query->paginate(15));
     }
 
     public function show(int $id)
@@ -36,11 +36,11 @@ class GeneratorController extends Controller
         $request->validate(['q' => 'required|string']);
 
         $generators = Generator::with('provider.user')
-            ->whereHas('provider', function ($q) use ($request) {
-                $q->where('status', 'active')
-                  ->where('company_name', 'like', '%' . $request->q . '%');
+            ->whereHas('provider', fn($q) => $q->where('status', 'active'))
+            ->where(function ($q) use ($request) {
+                $q->whereHas('provider', fn($inner) => $inner->where('company_name', 'like', '%' . $request->q . '%'))
+                  ->orWhere('type', 'like', '%' . $request->q . '%');
             })
-            ->orWhere('type', 'like', '%' . $request->q . '%')
             ->get();
 
         return response()->json($generators);
@@ -54,6 +54,13 @@ class GeneratorController extends Controller
             ->whereIn('id', $request->ids)
             ->get();
 
+        return response()->json($generators);
+    }
+
+    public function myGenerators(Request $request)
+    {
+        $provider   = Provider::where('user_id', $request->user()->id)->firstOrFail();
+        $generators = Generator::where('provider_id', $provider->id)->get();
         return response()->json($generators);
     }
 

@@ -28,9 +28,4 @@ class Subscription extends Model
     {
         return $this->hasMany(Invoice::class);
     }
-
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class);
-    }
 }

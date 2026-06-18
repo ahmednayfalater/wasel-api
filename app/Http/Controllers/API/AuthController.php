@@ -8,6 +8,7 @@ use App\Models\ProviderProof;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -32,7 +33,7 @@ class AuthController extends Controller
             'phone'       => $request->phone,
             'address'     => $request->address,
             'role'        => 'customer',
-            'password'    => Hash::make($request->password),
+            'password'    => $request->password,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -68,7 +69,7 @@ class AuthController extends Controller
             'phone'       => $request->phone,
             'address'     => $request->address,
             'role'        => 'provider',
-            'password'    => Hash::make($request->password),
+            'password'    => $request->password,
         ]);
 
         $provider = Provider::create([
@@ -131,5 +132,41 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json(['message' => 'تم تسجيل الخروج']);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate(['email' => 'required|email|exists:users,email']);
+
+        $status = Password::sendResetLink($request->only('email'));
+
+        if ($status !== Password::RESET_LINK_SENT) {
+            return response()->json(['message' => 'تعذر إرسال رابط إعادة التعيين'], 500);
+        }
+
+        return response()->json(['message' => 'تم إرسال رابط إعادة تعيين كلمة المرور على بريدك الإلكتروني']);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token'    => 'required|string',
+            'email'    => 'required|email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->update(['password' => $password]);
+                $user->tokens()->delete();
+            }
+        );
+
+        if ($status !== Password::PASSWORD_RESET) {
+            return response()->json(['message' => 'الرابط غير صالح أو منتهي الصلاحية'], 400);
+        }
+
+        return response()->json(['message' => 'تم إعادة تعيين كلمة المرور بنجاح']);
     }
 }

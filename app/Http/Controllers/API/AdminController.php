@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Complaint;
+use App\Models\Invoice;
 use App\Models\Provider;
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -63,12 +65,16 @@ class AdminController extends Controller
     public function systemReports()
     {
         return response()->json([
-            'total_users'       => User::count(),
-            'total_providers'   => Provider::count(),
-            'active_providers'  => Provider::where('status', 'active')->count(),
-            'pending_providers' => Provider::where('status', 'pending')->count(),
-            'total_complaints'  => Complaint::count(),
-            'open_complaints'   => Complaint::where('status', '!=', 'closed')->count(),
+            'total_users'         => User::count(),
+            'total_providers'     => Provider::count(),
+            'active_providers'    => Provider::where('status', 'active')->count(),
+            'pending_providers'   => Provider::where('status', 'pending')->count(),
+            'total_subscriptions' => Subscription::count(),
+            'active_subscriptions'=> Subscription::where('status', 'active')->count(),
+            'total_invoices'      => Invoice::count(),
+            'total_revenue'       => Invoice::where('status', 'paid')->sum('amount'),
+            'total_complaints'    => Complaint::count(),
+            'open_complaints'     => Complaint::where('status', '!=', 'closed')->count(),
         ]);
     }
 }

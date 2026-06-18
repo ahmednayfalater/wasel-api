@@ -13,7 +13,7 @@ class ReviewController extends Controller
     {
         $request->validate([
             'target_type' => 'required|in:provider,system',
-            'target_id'   => 'nullable|exists:providers,id',
+            'target_id'   => 'required_if:target_type,provider|exists:providers,id',
             'rate'        => 'required|integer|min:1|max:5',
             'comment'     => 'nullable|string',
         ]);
