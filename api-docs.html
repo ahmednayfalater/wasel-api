@@ -142,6 +142,33 @@ proofs[]          = {صورة إثبات}</pre></div>
       </div>
       <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
     </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method POST">POST</span>
+        <span class="endpoint-path">/forgot-password</span>
+        <span class="endpoint-desc">طلب إعادة تعيين كلمة المرور</span>
+        <span class="role-badge role-public">عام</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">Body (JSON)</div>
+<pre>{ "email": "user@test.com" }</pre></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method POST">POST</span>
+        <span class="endpoint-path">/reset-password</span>
+        <span class="endpoint-desc">إعادة تعيين كلمة المرور</span>
+        <span class="role-badge role-public">عام</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">Body (JSON)</div>
+<pre>{
+  "token": "TOKEN_FROM_EMAIL",
+  "email": "user@test.com",
+  "password": "newpassword123",
+  "password_confirmation": "newpassword123"
+}</pre></div></div>
+    </div>
   </div>
 
   <!-- GENERATORS -->
@@ -212,6 +239,97 @@ proofs[]          = {صورة إثبات}</pre></div>
         <span class="method DELETE">DELETE</span>
         <span class="endpoint-path">/generators/{id}</span>
         <span class="endpoint-desc">حذف مولد</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method GET">GET</span>
+        <span class="endpoint-path">/generators/compare?ids[]=1&ids[]=2</span>
+        <span class="endpoint-desc">مقارنة بين مولدين أو ثلاثة</span>
+        <span class="role-badge role-customer">مسجّل دخول</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">Query Params</div><pre>?ids[]=1&ids[]=2&ids[]=3</pre></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method GET">GET</span>
+        <span class="endpoint-path">/provider/generators</span>
+        <span class="endpoint-desc">مولداتي أنا (Provider فقط)</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+  </div>
+
+  <!-- PROVIDER -->
+  <div class="section">
+    <div class="section-title">3. لوحة المزود — Provider</div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method GET">GET</span>
+        <span class="endpoint-path">/provider/profile</span>
+        <span class="endpoint-desc">بيانات المزود</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method PUT">PUT</span>
+        <span class="endpoint-path">/provider/profile</span>
+        <span class="endpoint-desc">تعديل بيانات المزود</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">Body (JSON)</div>
+<pre>{
+  "company_name": "مولدات النجار",
+  "price_KW": 6.5,
+  "terms_subscr": "يتم الدفع شهرياً",
+  "area_ids": [1, 2]
+}</pre></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method GET">GET</span>
+        <span class="endpoint-path">/provider/subscribers</span>
+        <span class="endpoint-desc">قائمة المشتركين</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method GET">GET</span>
+        <span class="endpoint-path">/provider/invoices</span>
+        <span class="endpoint-desc">فواتير المزود</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method GET">GET</span>
+        <span class="endpoint-path">/provider/reviews</span>
+        <span class="endpoint-desc">تقييمات المزود ومتوسطها</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method GET">GET</span>
+        <span class="endpoint-path">/provider/reports</span>
+        <span class="endpoint-desc">تقارير الإيرادات الشهرية</span>
         <span class="role-badge role-provider">Provider</span>
       </div>
       <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
@@ -355,6 +473,87 @@ receipt_image  = {صورة الإيصال}</pre></div></div>
     </div>
   </div>
 
+  <!-- POSTERS & AREAS -->
+  <div class="section">
+    <div class="section-title">7. الإعلانات والمناطق — Posters & Areas</div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method GET">GET</span>
+        <span class="endpoint-path">/posters</span>
+        <span class="endpoint-desc">كل الإعلانات</span>
+        <span class="role-badge role-customer">مسجّل دخول</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method POST">POST</span>
+        <span class="endpoint-path">/posters</span>
+        <span class="endpoint-desc">إضافة إعلان</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">Body (JSON)</div>
+<pre>{
+  "title": "عرض خاص لشهر يوليو",
+  "description": "خصم 20% على رسوم الاشتراك"
+}</pre></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method PUT">PUT</span>
+        <span class="endpoint-path">/posters/{id}</span>
+        <span class="endpoint-desc">تعديل إعلان</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">Body (JSON)</div>
+<pre>{ "title": "عنوان جديد", "description": "وصف جديد" }</pre></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method DELETE">DELETE</span>
+        <span class="endpoint-path">/posters/{id}</span>
+        <span class="endpoint-desc">حذف إعلان</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method GET">GET</span>
+        <span class="endpoint-path">/areas</span>
+        <span class="endpoint-desc">كل المناطق</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method POST">POST</span>
+        <span class="endpoint-path">/areas</span>
+        <span class="endpoint-desc">إضافة منطقة جديدة</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">Body (JSON)</div>
+<pre>{ "name": "الشجاعية", "coordinates": "31.5017,34.4668" }</pre></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method POST">POST</span>
+        <span class="endpoint-path">/areas/{id}/join</span>
+        <span class="endpoint-desc">الانضمام لمنطقة موجودة</span>
+        <span class="role-badge role-provider">Provider</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+  </div>
+
   <!-- REVIEWS & COMPLAINTS -->
   <div class="section">
     <div class="section-title">6. التقييمات والشكاوى</div>
@@ -483,6 +682,39 @@ receipt_image  = {صورة الإيصال}</pre></div></div>
         <span class="role-badge role-admin">Admin</span>
       </div>
       <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method PUT">PUT</span>
+        <span class="endpoint-path">/admin/users/{id}</span>
+        <span class="endpoint-desc">تعديل مستخدم</span>
+        <span class="role-badge role-admin">Admin</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">Body (JSON)</div>
+<pre>{ "first_name": "محمد", "email": "new@test.com" }</pre></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method DELETE">DELETE</span>
+        <span class="endpoint-path">/admin/users/{id}</span>
+        <span class="endpoint-desc">حذف مستخدم</span>
+        <span class="role-badge role-admin">Admin</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">لا يحتاج Body</div></div></div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method PUT">PUT</span>
+        <span class="endpoint-path">/admin/complaints/{id}</span>
+        <span class="endpoint-desc">تحديث حالة شكوى</span>
+        <span class="role-badge role-admin">Admin</span>
+      </div>
+      <div class="endpoint-body"><div class="body-section"><div class="body-label">Body (JSON)</div>
+<pre>{ "status": "in_progress" }
+{ "status": "closed" }</pre></div></div>
     </div>
 
     <div class="endpoint">
