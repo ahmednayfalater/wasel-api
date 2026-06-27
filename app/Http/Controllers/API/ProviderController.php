@@ -46,10 +46,9 @@ class ProviderController extends Controller
 
         $invoices = Invoice::whereHas('subscription.generator', fn($q) => $q->where('provider_id', $provider->id))
             ->where('status', 'paid')
-            ->selectRaw('MONTH(release_date) as month, YEAR(release_date) as year, SUM(amount) as total')
+            ->selectRaw('EXTRACT(MONTH FROM release_date) as month, EXTRACT(YEAR FROM release_date) as year, SUM(amount) as total')
             ->groupBy('year', 'month')
-            ->orderBy('year', 'desc')
-            ->orderBy('month', 'desc')
+            ->orderByRaw('year desc, month desc')
             ->get();
 
         return response()->json($invoices);

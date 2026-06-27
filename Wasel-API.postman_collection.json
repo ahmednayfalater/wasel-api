@@ -1,0 +1,593 @@
+{
+  "info": {
+    "name": "Wasel API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://wasel-api-a3mr.onrender.com/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login - Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.token) { pm.collectionVariables.set('token', res.token); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@wasel.com\",\n  \"password\": \"admin1234\"\n}"
+            },
+            "url": "{{base_url}}/login"
+          }
+        },
+        {
+          "name": "Login - Provider",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.token) { pm.collectionVariables.set('token', res.token); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"provider@wasel.com\",\n  \"password\": \"provider1234\"\n}"
+            },
+            "url": "{{base_url}}/login"
+          }
+        },
+        {
+          "name": "Login - Customer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.token) { pm.collectionVariables.set('token', res.token); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"customer@wasel.com\",\n  \"password\": \"customer1234\"\n}"
+            },
+            "url": "{{base_url}}/login"
+          }
+        },
+        {
+          "name": "Register Customer",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"سارة\",\n  \"last_name\": \"أحمد\",\n  \"email\": \"sara@test.com\",\n  \"phone\": \"0599111222\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"
+            },
+            "url": "{{base_url}}/register/customer"
+          }
+        },
+        {
+          "name": "Register Provider",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"خالد\",\n  \"last_name\": \"العمر\",\n  \"email\": \"khaled@provider.com\",\n  \"phone\": \"0599333444\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"company_name\": \"شركة النور للكهرباء\",\n  \"price_KW\": 3.0,\n  \"terms_subscr\": \"الدفع شهري\"\n}"
+            },
+            "url": "{{base_url}}/register/provider"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/logout"
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/user"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Generators",
+      "item": [
+        {
+          "name": "List All Generators",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/generators"
+          }
+        },
+        {
+          "name": "Search Generators",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/generators/search?q=كهرباء",
+              "query": [{"key": "q", "value": "كهرباء"}]
+            }
+          }
+        },
+        {
+          "name": "Compare Generators",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/generators/compare?ids[]=1&ids[]=2",
+              "query": [{"key": "ids[]", "value": "1"}, {"key": "ids[]", "value": "2"}]
+            }
+          }
+        },
+        {
+          "name": "Get Generator by ID",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/generators/1"
+          }
+        },
+        {
+          "name": "[Provider] My Generators",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/provider/generators"
+          }
+        },
+        {
+          "name": "[Provider] Add Generator",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"diesel\",\n  \"status\": \"active\",\n  \"powerKW\": 50,\n  \"gps\": \"31.5018,34.4668\"\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": "{{base_url}}/generators"
+          }
+        },
+        {
+          "name": "[Provider] Update Generator",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"مولد 50 كيلوواط - محدث\",\n  \"capacity_KW\": 55\n}"
+            },
+            "url": "{{base_url}}/generators/1"
+          }
+        },
+        {
+          "name": "[Provider] Delete Generator",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/generators/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "[Customer] Subscribe",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"generator_id\": 1\n}"
+            },
+            "url": "{{base_url}}/subscriptions"
+          }
+        },
+        {
+          "name": "[Customer] My Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/subscriptions/my"
+          }
+        },
+        {
+          "name": "[Customer] Cancel Subscription",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/subscriptions/1"
+          }
+        },
+        {
+          "name": "[Provider] Approve Subscription",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/subscriptions/1/approve"
+          }
+        },
+        {
+          "name": "[Provider] Reject Subscription",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/subscriptions/1/reject"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "item": [
+        {
+          "name": "[Customer] My Invoices",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/invoices/my"
+          }
+        },
+        {
+          "name": "[Customer] Get Invoice",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/invoices/1"
+          }
+        },
+        {
+          "name": "[Provider] Create Invoice",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": 1,\n  \"previous_reading\": 0,\n  \"current_reading\": 100,\n  \"due_date\": \"2026-07-31\"\n}"
+            },
+            "url": "{{base_url}}/invoices"
+          }
+        },
+        {
+          "name": "[Provider] My Invoices",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/provider/invoices"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "[Customer] Submit Payment",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {"key": "invoice_id", "value": "1", "type": "text"},
+                {"key": "amount", "value": "150", "type": "text"},
+                {"key": "receipt_image", "type": "file", "src": ""}
+              ]
+            },
+            "url": "{{base_url}}/payments"
+          }
+        },
+        {
+          "name": "[Customer] My Payments",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/payments/my"
+          }
+        },
+        {
+          "name": "[Provider] Review Payment",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}"
+            },
+            "url": "{{base_url}}/payments/1/review"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Provider",
+      "item": [
+        {
+          "name": "[Provider] Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/provider/profile"
+          }
+        },
+        {
+          "name": "[Provider] Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_name\": \"شركة الكهرباء الأهلية المحدثة\",\n  \"price_KW\": 2.8\n}"
+            },
+            "url": "{{base_url}}/provider/profile"
+          }
+        },
+        {
+          "name": "[Provider] Subscribers",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/provider/subscribers"
+          }
+        },
+        {
+          "name": "[Provider] Revenue Reports",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/provider/reports"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews & Complaints",
+      "item": [
+        {
+          "name": "[Customer] Submit Review",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target_type\": \"provider\",\n  \"target_id\": 1,\n  \"rate\": 5,\n  \"comment\": \"خدمة ممتازة\"\n}"
+            },
+            "url": "{{base_url}}/reviews"
+          }
+        },
+        {
+          "name": "[Provider] My Reviews",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/provider/reviews"
+          }
+        },
+        {
+          "name": "[Customer] Submit Complaint",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"انقطاع الخدمة\",\n  \"description\": \"انقطعت الخدمة لمدة 3 ساعات\",\n  \"target_type\": \"provider\",\n  \"target_id\": 1\n}"
+            },
+            "url": "{{base_url}}/complaints"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "[Customer] My Notifications",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/notifications/my"
+          }
+        },
+        {
+          "name": "[Customer] Mark as Read",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/notifications/1/read"
+          }
+        },
+        {
+          "name": "[Provider] Send Notification",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"title\": \"إشعار مهم\",\n  \"message\": \"تم تجديد اشتراكك\"\n}"
+            },
+            "url": "{{base_url}}/notifications/send"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Posters",
+      "item": [
+        {
+          "name": "List Posters",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/posters"
+          }
+        },
+        {
+          "name": "[Provider] Create Poster",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {"key": "title", "value": "عرض خاص", "type": "text"},
+                {"key": "description", "value": "خصم 20% لأول شهر", "type": "text"},
+                {"key": "image", "type": "file", "src": ""}
+              ]
+            },
+            "url": "{{base_url}}/posters"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Areas",
+      "item": [
+        {
+          "name": "[Provider] List Areas",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/areas"
+          }
+        },
+        {
+          "name": "[Provider] Create Area",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"حي الرمال\",\n  \"city\": \"غزة\"\n}"
+            },
+            "url": "{{base_url}}/areas"
+          }
+        },
+        {
+          "name": "[Provider] Join Area",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/areas/1/join"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "[Admin] All Users",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/admin/users"
+          }
+        },
+        {
+          "name": "[Admin] Update User",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Content-Type", "value": "application/json"}, {"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"customer\"\n}"
+            },
+            "url": "{{base_url}}/admin/users/1"
+          }
+        },
+        {
+          "name": "[Admin] Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/admin/users/1"
+          }
+        },
+        {
+          "name": "[Admin] All Providers",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/admin/providers"
+          }
+        },
+        {
+          "name": "[Admin] Approve Provider",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/admin/providers/1/approve"
+          }
+        },
+        {
+          "name": "[Admin] Suspend Provider",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/admin/providers/1/suspend"
+          }
+        },
+        {
+          "name": "[Admin] All Complaints",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/admin/complaints"
+          }
+        },
+        {
+          "name": "[Admin] System Reports",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}, {"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/admin/reports"
+          }
+        }
+      ]
+    }
+  ]
+}
