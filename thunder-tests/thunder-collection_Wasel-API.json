@@ -1,0 +1,596 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Wasel API",
+  "dateExported": "2026-06-27",
+  "version": "1.1",
+  "folders": [
+    { "_id": "f-auth", "name": "Auth", "containerId": "" },
+    { "_id": "f-generators", "name": "Generators", "containerId": "" },
+    { "_id": "f-subscriptions", "name": "Subscriptions", "containerId": "" },
+    { "_id": "f-invoices", "name": "Invoices", "containerId": "" },
+    { "_id": "f-payments", "name": "Payments", "containerId": "" },
+    { "_id": "f-provider", "name": "Provider", "containerId": "" },
+    { "_id": "f-reviews", "name": "Reviews & Complaints", "containerId": "" },
+    { "_id": "f-notifications", "name": "Notifications", "containerId": "" },
+    { "_id": "f-admin", "name": "Admin", "containerId": "" }
+  ],
+  "requests": [
+    {
+      "_id": "r-login-admin",
+      "containerId": "f-auth",
+      "name": "Login - Admin",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/login",
+      "method": "POST",
+      "sortNum": 1,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"email\": \"admin@wasel.com\",\n  \"password\": \"admin1234\"\n}"
+      }
+    },
+    {
+      "_id": "r-login-provider",
+      "containerId": "f-auth",
+      "name": "Login - Provider",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/login",
+      "method": "POST",
+      "sortNum": 2,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"email\": \"provider@wasel.com\",\n  \"password\": \"provider1234\"\n}"
+      }
+    },
+    {
+      "_id": "r-login-customer",
+      "containerId": "f-auth",
+      "name": "Login - Customer",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/login",
+      "method": "POST",
+      "sortNum": 3,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"email\": \"customer@wasel.com\",\n  \"password\": \"customer1234\"\n}"
+      }
+    },
+    {
+      "_id": "r-register-customer",
+      "containerId": "f-auth",
+      "name": "Register Customer",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/register/customer",
+      "method": "POST",
+      "sortNum": 4,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"first_name\": \"سارة\",\n  \"last_name\": \"أحمد\",\n  \"email\": \"sara@test.com\",\n  \"phone\": \"0599111222\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"
+      }
+    },
+    {
+      "_id": "r-register-provider",
+      "containerId": "f-auth",
+      "name": "Register Provider",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/register/provider",
+      "method": "POST",
+      "sortNum": 5,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"first_name\": \"خالد\",\n  \"last_name\": \"العمر\",\n  \"email\": \"khaled@provider.com\",\n  \"phone\": \"0599333444\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"company_name\": \"شركة النور للكهرباء\",\n  \"price_KW\": 3.0,\n  \"terms_subscr\": \"الدفع شهري\"\n}"
+      }
+    },
+    {
+      "_id": "r-logout",
+      "containerId": "f-auth",
+      "name": "Logout",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/logout",
+      "method": "POST",
+      "sortNum": 6,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": { "type": "none" }
+    },
+    {
+      "_id": "r-current-user",
+      "containerId": "f-auth",
+      "name": "Get Current User",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/user",
+      "method": "GET",
+      "sortNum": 7,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-generators-list",
+      "containerId": "f-generators",
+      "name": "List All Generators",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/generators",
+      "method": "GET",
+      "sortNum": 1,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-generators-search",
+      "containerId": "f-generators",
+      "name": "Search Generators",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/generators/search?q=diesel",
+      "method": "GET",
+      "sortNum": 2,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-generators-show",
+      "containerId": "f-generators",
+      "name": "Get Generator by ID",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/generators/1",
+      "method": "GET",
+      "sortNum": 3,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-generators-my",
+      "containerId": "f-generators",
+      "name": "[Provider] My Generators",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/provider/generators",
+      "method": "GET",
+      "sortNum": 4,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-generators-add",
+      "containerId": "f-generators",
+      "name": "[Provider] Add Generator",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/generators",
+      "method": "POST",
+      "sortNum": 5,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"type\": \"diesel\",\n  \"status\": \"active\",\n  \"powerKW\": 50,\n  \"gps\": \"31.5018,34.4668\"\n}"
+      }
+    },
+    {
+      "_id": "r-generators-update",
+      "containerId": "f-generators",
+      "name": "[Provider] Update Generator",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/generators/1",
+      "method": "PUT",
+      "sortNum": 6,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"status\": \"maintenance\",\n  \"powerKW\": 60\n}"
+      }
+    },
+    {
+      "_id": "r-generators-delete",
+      "containerId": "f-generators",
+      "name": "[Provider] Delete Generator",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/generators/1",
+      "method": "DELETE",
+      "sortNum": 7,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-sub-store",
+      "containerId": "f-subscriptions",
+      "name": "[Customer] Subscribe",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/subscriptions",
+      "method": "POST",
+      "sortNum": 1,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"generator_id\": 1\n}"
+      }
+    },
+    {
+      "_id": "r-sub-my",
+      "containerId": "f-subscriptions",
+      "name": "[Customer] My Subscriptions",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/subscriptions/my",
+      "method": "GET",
+      "sortNum": 2,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-sub-cancel",
+      "containerId": "f-subscriptions",
+      "name": "[Customer] Cancel Subscription",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/subscriptions/1",
+      "method": "DELETE",
+      "sortNum": 3,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-sub-approve",
+      "containerId": "f-subscriptions",
+      "name": "[Provider] Approve Subscription",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/subscriptions/1/approve",
+      "method": "PUT",
+      "sortNum": 4,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-sub-reject",
+      "containerId": "f-subscriptions",
+      "name": "[Provider] Reject Subscription",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/subscriptions/1/reject",
+      "method": "PUT",
+      "sortNum": 5,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-invoice-my",
+      "containerId": "f-invoices",
+      "name": "[Customer] My Invoices",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/invoices/my",
+      "method": "GET",
+      "sortNum": 1,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-invoice-show",
+      "containerId": "f-invoices",
+      "name": "[Customer] Get Invoice",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/invoices/1",
+      "method": "GET",
+      "sortNum": 2,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-invoice-create",
+      "containerId": "f-invoices",
+      "name": "[Provider] Create Invoice",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/invoices",
+      "method": "POST",
+      "sortNum": 3,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"subscription_id\": 1,\n  \"previous_reading\": 0,\n  \"current_reading\": 100,\n  \"due_date\": \"2026-07-31\"\n}"
+      }
+    },
+    {
+      "_id": "r-invoice-provider",
+      "containerId": "f-invoices",
+      "name": "[Provider] My Invoices",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/provider/invoices",
+      "method": "GET",
+      "sortNum": 4,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-payment-store",
+      "containerId": "f-payments",
+      "name": "[Customer] Submit Payment",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/payments",
+      "method": "POST",
+      "sortNum": 1,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "formdata",
+        "form": [
+          { "name": "invoice_id", "value": "1" },
+          { "name": "amount", "value": "150" }
+        ]
+      }
+    },
+    {
+      "_id": "r-payment-my",
+      "containerId": "f-payments",
+      "name": "[Customer] My Payments",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/payments/my",
+      "method": "GET",
+      "sortNum": 2,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-payment-review",
+      "containerId": "f-payments",
+      "name": "[Provider] Review Payment",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/payments/1/review",
+      "method": "PUT",
+      "sortNum": 3,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"status\": \"approved\"\n}"
+      }
+    },
+    {
+      "_id": "r-provider-profile",
+      "containerId": "f-provider",
+      "name": "[Provider] Get Profile",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/provider/profile",
+      "method": "GET",
+      "sortNum": 1,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-provider-update",
+      "containerId": "f-provider",
+      "name": "[Provider] Update Profile",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/provider/profile",
+      "method": "PUT",
+      "sortNum": 2,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"company_name\": \"شركة الكهرباء الأهلية\",\n  \"price_KW\": 2.8\n}"
+      }
+    },
+    {
+      "_id": "r-provider-subscribers",
+      "containerId": "f-provider",
+      "name": "[Provider] Subscribers",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/provider/subscribers",
+      "method": "GET",
+      "sortNum": 3,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-provider-reports",
+      "containerId": "f-provider",
+      "name": "[Provider] Revenue Reports",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/provider/reports",
+      "method": "GET",
+      "sortNum": 4,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-review-store",
+      "containerId": "f-reviews",
+      "name": "[Customer] Submit Review",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/reviews",
+      "method": "POST",
+      "sortNum": 1,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"target_type\": \"provider\",\n  \"target_id\": 1,\n  \"rate\": 5,\n  \"comment\": \"خدمة ممتازة\"\n}"
+      }
+    },
+    {
+      "_id": "r-review-provider",
+      "containerId": "f-reviews",
+      "name": "[Provider] My Reviews",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/provider/reviews",
+      "method": "GET",
+      "sortNum": 2,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-complaint-store",
+      "containerId": "f-reviews",
+      "name": "[Customer] Submit Complaint",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/complaints",
+      "method": "POST",
+      "sortNum": 3,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"title\": \"انقطاع الخدمة\",\n  \"description\": \"انقطعت الخدمة لمدة 3 ساعات\",\n  \"target_type\": \"provider\",\n  \"target_id\": 1\n}"
+      }
+    },
+    {
+      "_id": "r-notif-my",
+      "containerId": "f-notifications",
+      "name": "[Customer] My Notifications",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/notifications/my",
+      "method": "GET",
+      "sortNum": 1,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-notif-read",
+      "containerId": "f-notifications",
+      "name": "[Customer] Mark as Read",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/notifications/1/read",
+      "method": "POST",
+      "sortNum": 2,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-notif-send",
+      "containerId": "f-notifications",
+      "name": "[Provider] Send Notification",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/notifications/send",
+      "method": "POST",
+      "sortNum": 3,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_id\": 1,\n  \"title\": \"إشعار مهم\",\n  \"message\": \"تم تجديد اشتراكك\"\n}"
+      }
+    },
+    {
+      "_id": "r-admin-users",
+      "containerId": "f-admin",
+      "name": "[Admin] All Users",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/admin/users",
+      "method": "GET",
+      "sortNum": 1,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-admin-providers",
+      "containerId": "f-admin",
+      "name": "[Admin] All Providers",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/admin/providers",
+      "method": "GET",
+      "sortNum": 2,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-admin-approve",
+      "containerId": "f-admin",
+      "name": "[Admin] Approve Provider",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/admin/providers/1/approve",
+      "method": "PUT",
+      "sortNum": 3,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-admin-suspend",
+      "containerId": "f-admin",
+      "name": "[Admin] Suspend Provider",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/admin/providers/1/suspend",
+      "method": "PUT",
+      "sortNum": 4,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-admin-complaints",
+      "containerId": "f-admin",
+      "name": "[Admin] All Complaints",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/admin/complaints",
+      "method": "GET",
+      "sortNum": 5,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "r-admin-reports",
+      "containerId": "f-admin",
+      "name": "[Admin] System Reports",
+      "url": "https://wasel-api-production-0719.up.railway.app/api/admin/reports",
+      "method": "GET",
+      "sortNum": 6,
+      "headers": [
+        { "name": "Authorization", "value": "Bearer TOKEN_HERE" },
+        { "name": "Accept", "value": "application/json" }
+      ]
+    }
+  ]
+}

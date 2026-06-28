@@ -6,7 +6,7 @@
   "variable": [
     {
       "key": "base_url",
-      "value": "https://wasel-api-a3mr.onrender.com/api"
+      "value": "https://wasel-api-production-0719.up.railway.app/api"
     },
     {
       "key": "token",
