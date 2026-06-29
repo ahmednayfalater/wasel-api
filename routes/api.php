@@ -22,19 +22,16 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
+Route::get('/generators', [GeneratorController::class, 'index']);
+Route::get('/generators/search', [GeneratorController::class, 'search']);
+Route::get('/generators/compare', [GeneratorController::class, 'compare']);
+Route::get('/generators/{id}', [GeneratorController::class, 'show']);
+Route::get('/posters', [PosterController::class, 'index']);
+
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', fn(Request $request) => $request->user());
-
-    // Generators - public for logged in users
-    Route::get('/generators', [GeneratorController::class, 'index']);
-    Route::get('/generators/search', [GeneratorController::class, 'search']);
-    Route::get('/generators/compare', [GeneratorController::class, 'compare']);
-    Route::get('/generators/{id}', [GeneratorController::class, 'show']);
-
-    // Posters - public for logged in users
-    Route::get('/posters', [PosterController::class, 'index']);
 
     // Customer Routes
     Route::middleware('role:customer')->group(function () {
