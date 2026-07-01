@@ -55,9 +55,13 @@ class NotificationController extends Controller
                 'is_read' => false,
             ]);
 
-            Mail::to($subscription->user->email)->queue(
-                new GeneralNotificationMail($request->message, $request->type)
-            );
+            try {
+                Mail::to($subscription->user->email)->send(
+                    new GeneralNotificationMail($request->message, $request->type)
+                );
+            } catch (\Exception $e) {
+                // Mail failure doesn't block in-app notification
+            }
         }
 
         return response()->json(['message' => 'تم إرسال الإشعار لجميع المشتركين']);

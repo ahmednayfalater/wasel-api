@@ -15,6 +15,7 @@ class AuthController extends Controller
 {
     public function registerCustomer(Request $request)
     {
+
         $request->validate([
             'first_name'  => 'required|string',
             'second_name' => 'nullable|string',
@@ -55,7 +56,6 @@ class AuthController extends Controller
             'address'      => 'nullable|string',
             'password'     => 'required|string|min:6|confirmed',
             'company_name' => 'required|string',
-            'price_KW'     => 'required|numeric',
             'terms_subscr' => 'nullable|string',
             'proofs'       => 'required|array|min:1',
             'proofs.*'     => 'required|image|mimes:jpg,jpeg,png|max:2048',
@@ -75,9 +75,9 @@ class AuthController extends Controller
         $provider = Provider::create([
             'user_id'      => $user->id,
             'company_name' => $request->company_name,
-            'price_KW'     => $request->price_KW,
+            'price_KW'     => null,
             'terms_subscr' => $request->terms_subscr,
-            'status'       => 'pending',
+            'status'       => 'active',
         ]);
 
         foreach ($request->file('proofs') as $proof) {
@@ -88,9 +88,12 @@ class AuthController extends Controller
             ]);
         }
 
+        $token = $user->createToken('auth_token')->plainTextToken;
+
         return response()->json([
-            'message' => 'تم التسجيل بنجاح، في انتظار موافقة الإدارة',
+            'message' => 'تم التسجيل بنجاح',
             'user'    => $user,
+            'token'   => $token,
         ], 201);
     }
 
