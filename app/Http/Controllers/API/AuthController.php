@@ -48,6 +48,7 @@ class AuthController extends Controller
     public function registerProvider(Request $request)
     {
         $request->validate([
+            // الخطوة 1: البيانات الشخصية
             'first_name'   => 'required|string',
             'second_name'  => 'nullable|string',
             'last_name'    => 'required|string',
@@ -57,6 +58,12 @@ class AuthController extends Controller
             'password'     => 'required|string|min:6|confirmed',
             'company_name' => 'required|string',
             'terms_subscr' => 'nullable|string',
+            // الخطوة 2: بيانات المولد
+            'generator_type'   => 'required|string',
+            'generator_powerKW'=> 'required|numeric',
+            'generator_gps'    => 'nullable|string',
+            'generator_price'  => 'required|numeric',
+            // الخطوة 3: صور الإثباتات
             'proofs'       => 'required|array|min:1',
             'proofs.*'     => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
@@ -78,6 +85,15 @@ class AuthController extends Controller
             'price_KW'     => null,
             'terms_subscr' => $request->terms_subscr,
             'status'       => 'active',
+        ]);
+
+        \App\Models\Generator::create([
+            'provider_id' => $provider->id,
+            'type'        => $request->generator_type,
+            'status'      => 'active',
+            'gps'         => $request->generator_gps,
+            'powerKW'     => $request->generator_powerKW,
+            'price_KW'    => $request->generator_price,
         ]);
 
         foreach ($request->file('proofs') as $proof) {

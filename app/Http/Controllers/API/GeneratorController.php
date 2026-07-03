@@ -67,10 +67,11 @@ class GeneratorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'type'    => 'required|string',
-            'status'  => 'required|in:active,offline,maintenance',
-            'gps'     => 'nullable|string',
-            'powerKW' => 'required|numeric',
+            'type'     => 'required|string',
+            'status'   => 'required|in:active,offline,maintenance',
+            'gps'      => 'nullable|string',
+            'powerKW'  => 'required|numeric',
+            'price_KW' => 'required|numeric',
         ]);
 
         $provider = Provider::where('user_id', $request->user()->id)->firstOrFail();
@@ -81,6 +82,7 @@ class GeneratorController extends Controller
             'status'      => $request->status,
             'gps'         => $request->gps,
             'powerKW'     => $request->powerKW,
+            'price_KW'    => $request->price_KW,
         ]);
 
         return response()->json($generator, 201);

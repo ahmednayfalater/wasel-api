@@ -12,6 +12,7 @@ class Generator extends Model
         'status',
         'gps',
         'powerKW',
+        'price_KW',
     ];
 
     public function provider()

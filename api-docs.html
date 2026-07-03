@@ -142,17 +142,26 @@
         <span class="role-badge role-public">عام</span>
       </div>
       <div class="endpoint-body">
-        <div class="body-section"><div class="body-label">Body (form-data)</div>
-<pre>first_name            = خالد
+        <div class="body-section"><div class="body-label">Body (form-data) — 3 خطوات في request واحد</div>
+<pre>--- الخطوة 1: البيانات الشخصية ---
+first_name            = خالد
 last_name             = النجار
 email                 = provider@test.com
 password              = password123
 password_confirmation = password123
 phone                 = 0599222222
 company_name          = مولدات النجار
-price_KW              = 5.5
-terms_subscr          = يتم الدفع شهرياً
-proofs[]              = {صورة إثبات}</pre></div>
+terms_subscr          = يتم الدفع شهرياً  (اختياري)
+
+--- الخطوة 2: بيانات المولد ---
+generator_type        = كاتربيلر 2022
+generator_powerKW     = 150
+generator_gps         = 31.5017,34.4668  (اختياري)
+generator_price       = 5.5
+
+--- الخطوة 3: صور الإثباتات ---
+proofs[]              = {صورة إثبات الملكية}
+proofs[]              = {صورة الهوية}</pre></div>
       </div>
     </div>
 
@@ -286,7 +295,8 @@ proofs[]              = {صورة إثبات}</pre></div>
   "type": "كاتربيلر 2022",
   "status": "active",
   "gps": "31.5017,34.4668",
-  "powerKW": 150
+  "powerKW": 150,
+  "price_KW": 5.5
 }</pre></div></div>
     </div>
 
