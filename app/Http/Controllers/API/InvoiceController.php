@@ -37,11 +37,12 @@ class InvoiceController extends Controller
         ]);
 
         $provider     = Provider::where('user_id', $request->user()->id)->firstOrFail();
-        $subscription = Subscription::where('id', $request->subscription_id)
+        $subscription = Subscription::with('generator')
+            ->where('id', $request->subscription_id)
             ->whereHas('generator', fn($q) => $q->where('provider_id', $provider->id))
             ->firstOrFail();
 
-        $amount = ($request->current_reading - $request->previous_reading) * $provider->price_KW;
+        $amount = ($request->current_reading - $request->previous_reading) * $subscription->generator->price_KW;
 
         $invoice = Invoice::create([
             'subscription_id'  => $subscription->id,
