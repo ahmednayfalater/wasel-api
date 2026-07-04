@@ -39,7 +39,6 @@ class DatabaseSeeder extends Seeder
             ['user_id' => $providerUser->id],
             [
                 'company_name' => 'شركة الكهرباء الأهلية',
-                'price_KW'     => 2.5,
                 'terms_subscr' => 'الدفع شهري، ويتم قطع الخدمة عند التأخر أكثر من أسبوع.',
                 'status'       => 'active',
             ]

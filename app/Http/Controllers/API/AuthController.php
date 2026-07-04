@@ -82,7 +82,6 @@ class AuthController extends Controller
         $provider = Provider::create([
             'user_id'      => $user->id,
             'company_name' => $request->company_name,
-            'price_KW'     => null,
             'terms_subscr' => $request->terms_subscr,
             'status'       => 'active',
         ]);

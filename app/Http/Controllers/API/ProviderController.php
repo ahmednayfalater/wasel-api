@@ -20,7 +20,7 @@ class ProviderController extends Controller
     {
         $provider = Provider::where('user_id', $request->user()->id)->firstOrFail();
 
-        $provider->update($request->only(['company_name', 'price_KW', 'terms_subscr', 'accept_subscript']));
+        $provider->update($request->only(['company_name', 'terms_subscr', 'accept_subscript']));
 
         if ($request->has('area_ids')) {
             $provider->areas()->sync($request->area_ids);
