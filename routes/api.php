@@ -28,6 +28,7 @@ Route::get('/generators/compare', [GeneratorController::class, 'compare']);
 Route::get('/generators/{id}', [GeneratorController::class, 'show']);
 Route::get('/posters', [PosterController::class, 'index']);
 
+
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
